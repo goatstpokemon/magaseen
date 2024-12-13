@@ -1,18 +1,34 @@
 'use client';
 
 import Hero from '@/components/Hero';
+import { Button } from '@/components/ui/button';
 import DotPattern from '@/components/ui/dot-pattern';
-import { trpc } from '@/lib/trpc';
 
 import { cn } from '@/lib/utils';
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton
+} from '@clerk/nextjs';
 
 const Home = () => {
-  const hello = trpc.user.hello.useQuery({ text: 'world' });
-  if (!hello.data) {
-    return <div>Loading...</div>;
-  }
   return (
     <div className='max-w-6xl mx-auto '>
+      <nav className='my-5'>
+        <SignedOut>
+          <SignInButton>
+            <Button variant={'secondary'}>Sign in</Button>
+          </SignInButton>
+          <SignUpButton>
+            <Button variant={'default'}>Sign up</Button>
+          </SignUpButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+      </nav>
       <DotPattern
         width={20}
         height={50}

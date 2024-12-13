@@ -42,7 +42,7 @@ export const loginLogTable = pgTable('login_logs', {
 export const accounts = pgTable(
   'account',
   {
-    userId: text('userId')
+    userId: integer('userId')
       .notNull()
       .references(() => userTable.id, { onDelete: 'cascade' }),
     type: text('type').$type<AdapterAccountType>().notNull(),
@@ -63,7 +63,7 @@ export const accounts = pgTable(
 
 export const sessions = pgTable('session', {
   sessionToken: text('sessionToken').notNull().primaryKey(),
-  userId: text('user_id')
+  userId: integer('user_id')
     .notNull()
     .references(() => userTable.id, { onDelete: 'cascade' }),
   expires: timestamp('expires', { mode: 'date' }).notNull()
